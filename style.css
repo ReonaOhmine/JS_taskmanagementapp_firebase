@@ -1,0 +1,147 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+}
+
+.task-form {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.taskname {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.taskname label {
+    width: 120px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+ 
+
+.taskname input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.deadline {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.deadline label {
+    margin-bottom: 5px;
+}
+
+.deadline input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.chargename,
+.priority {
+    margin-top: 10px;
+}
+
+.chargename select,
+.priority select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+}
+
+.comment textarea {
+    width: calc(100% - 16px); /* Adjusted textarea width */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    resize: none;
+}
+
+.task-input button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #1da1f2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.task-input button:hover {
+    background-color: #0d8bf0;
+}
+
+.task-list {
+    margin-top: 20px;
+}
+
+.task {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.task p {
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.task button {
+    padding: 5px 10px;
+    margin-top: 10px;
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.task button.edit {
+    background-color: #999393;
+}
+
+.task button:hover {
+    background-color: #e60000;
+}
+
+.task button.edit:hover {
+    background-color: #666060;
+}

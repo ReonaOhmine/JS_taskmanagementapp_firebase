@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>TEAM TASK MANAGEMENT</title>
+</head>
+
+<body>
+    <!-- コンテンツ表示画面 -->
+    <div class="container">
+        <div class="header">
+            <h1>TEAM TASK MANAGEMENT</h1>
+        </div>
+        <div class="task-form">
+            <div class="taskname">
+                <label for="taskname">タスク名</label>
+                <input type="text" id="taskname" placeholder="タスク名を入力">
+            </div>
+            <div class="deadline">
+                <label for="deadline">期日</label>
+                <input type="date" id="deadline">
+            </div>
+            <div class="chargename">
+                <label for="chargename">担当者</label>
+                <select id="chargename">
+                    <option value="A">Aさん</option>
+                    <option value="B">Bさん</option>
+                    <option value="C">Cさん</option>
+                    <option value="D">Dさん</option>
+                </select>
+            </div>
+            <div class="priority">
+                <label for="priority">優先度</label>
+                <select id="priority">
+                    <option value="高">高</option>
+                    <option value="中">中</option>
+                    <option value="低">低</option>
+                </select>
+            </div>
+            <div class="task-input">
+                <div class="comment">
+                    <label for="memo">コメント</label>
+                    <textarea id="memo" placeholder="タスクに関するコメントを入力"></textarea>
+                </div>
+                <button id="send">タスクを追加</button>
+            </div>
+        </div>
+        <div id="output" class="task-list"></div>
+    </div>
+    <!--/ コンテンツ表示画面 -->
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- JQuery -->
+
+    <!--** 以下Firebase **-->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, push, set, update, remove, onChildAdded, onChildChanged, onChildRemoved }
+            from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        // //非公開
+        // const firebaseConfig = {
+        //     apiKey: 
+        //     authDomain: 
+        //     projectId: 
+        //     storageBucket: 
+        //     messagingSenderId: 
+        //     appId: 
+        // };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dbRef = ref(db, "chat");
+
+        $("#send").on("click", function () {
+            const task = {
+                taskname: $("#taskname").val(),
+                deadline: $("#deadline").val(),
+                chargename: $("#chargename").val(),
+                priority: $("#priority").val(),
+                memo: $("#memo").val()
+            }
+
+            const newPostRef = push(dbRef);
+            set(newPostRef, task);
+        });
+
+        onChildAdded(dbRef, (data) => {
+            const task = data.val();
+            const key = data.key;
+            let h = '<div id="' + key + '" class="task">';
+                // keyの入れ方がわからず質問
+            h += '<p contentEditable="true" class="taskname' + key + '_edit">タスク名: ' + task.taskname + '</p>';
+            h += '<p contentEditable="true" class="deadline">期日: ' + task.deadline + '</p>';
+            h += '<p contentEditable="true" class="chargename">担当者: ' + task.chargename + '</p>';
+            h += '<p contentEditable="true" class="priority">優先度: ' + task.priority + '</p>';
+            h += '<p contentEditable="true" class="memo">コメント: ' + task.memo + '</p>';
+            h += '<button class="remove" data-key="' + key + '">削除</button>';
+            h += '<button class="edit" data-key="' + key + '">編集</button>'; 
+            h += '</div>';
+            $("#output").prepend(h);
+        });
+
+        //削除イベント
+        $("#output").on("click", ".remove", function () {
+            const key = $(this).attr("data-key");
+            const remove_item = ref(db, "chat/" + key);
+            remove(remove_item);
+        });
+
+        //削除処理がfirebase側で実行されたら、イベント発生！
+        onChildRemoved(dbRef, (data) => {
+            $("#" + data.key).remove();
+        });
+
+        // 編集イベント
+        $("#output").on("click", ".edit", function () {
+            const key = $(this).attr("data-key");
+            update(ref(db, "chat/" + key), {
+                text: $("#" + key + '_update').html()
+            });
+        });
+
+        onChildChanged(dbRef, (data) => {
+            $("#" + data.key + '_edit').html(data.val().text);
+            $("#" + data.key + '_edit').fadeOut(800).fadeIn(800);
+        });
+    </script>
+
+</body>
+
+</html>
