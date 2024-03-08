@@ -5,7 +5,8 @@
 - firebase realtime databaseを用いて、チーム間でタスク管理（編集削除含む）ができるアプリです
 
 ## ③DEMO
-
+　https://reonaohmine.github.io/JS_taskmanagementapp_firebase/
+ 
 ## ④工夫した点・こだわった点
 - 講義の内容をベースに復習を兼ねて作成
 - 機能としてはシンプルになったので、プルダウンやカレンダー選択などを用いてこちらも復習を兼ねた
