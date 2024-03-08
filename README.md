@@ -2,7 +2,7 @@
 チームタスクマネジメントアプリ
 
 ## ②課題内容（どんな作品か）
--firebase realtime databaseを用いて、チーム間でタスク管理（編集削除含む）ができるアプリです
+- firebase realtime databaseを用いて、チーム間でタスク管理（編集削除含む）ができるアプリです
 
 ## ③DEMO
 
